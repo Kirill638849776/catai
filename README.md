@@ -21,7 +21,7 @@
 
 ## 📥 Скачать
 
-Перейдите в раздел [Releases](https://github.com/Kirill638849776/MeowCacheCleaner-WINDOWS/releases) и скачайте последнюю версию.
+Перейдите в раздел [Releases](https://github.com/Kirill638849776/catai/releases) и скачайте последнюю версию.
 
 | Файл | Описание |
 |---|---|
