@@ -2,7 +2,7 @@
 
 **Умный ИИ-помощник с локальной базой знаний и интернет-поиском**
 
-[![GitHub release](https://img.shields.io/github/v/release/Kirill638849776/MeowCacheCleaner-WINDOWS)](https://github.com/Kirill638849776/MeowCacheCleaner-WINDOWS/releases)
+[![GitHub release](https://img.shields.io/github/v/release/Kirill638849776/MeowCacheCleaner-WINDOWS)](https://github.com/Kirill638849776/catai/releases)
 [![GitHub](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![GitHub all releases](https://img.shields.io/github/downloads/Kirill638849776/MeowCacheCleaner-WINDOWS/total)](https://github.com/Kirill638849776/MeowCacheCleaner-WINDOWS/releases)
 
