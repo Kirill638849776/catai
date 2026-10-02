@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catai Beta — локальный ИИ-помощник</title>
+<meta name="description" content="Catai — локальный ИИ-помощник с собственной базой знаний и интернет-поиском. Скачать для Windows.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<style>
+  :root{
+    --bg:#0d0f14;
+    --bg2:#141821;
+    --card:#1a1f2b;
+    --border:#252b3a;
+    --text:#e8ecf3;
+    --muted:#8b93a7;
+    --accent:#ffb454;
+    --accent2:#ff8c42;
+    --green:#4ade80;
+    --red:#ef4444;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    min-height:100vh;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(255,180,84,.10), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(255,140,66,.08), transparent 45%);
+  }
+  .container{max-width:980px;margin:0 auto;padding:0 24px}
+
+  /* Header */
+  header{
+    padding:28px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+  }
+  .logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:20px}
+  .logo .emoji{font-size:28px}
+  .logo .badge{
+    font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;
+    background:rgba(255,180,84,.15);color:var(--accent);border:1px solid rgba(255,180,84,.3);
+    margin-left:4px;
+  }
+  nav a{
+    color:var(--muted);text-decoration:none;margin-left:24px;font-size:14px;
+    transition:color .2s;
+  }
+  nav a:hover{color:var(--accent)}
+
+  /* Hero */
+  .hero{
+    padding:80px 0 60px;
+    text-align:center;
+  }
+  .hero h1{
+    font-size:clamp(32px,5vw,52px);
+    line-height:1.15;
+    margin:0 0 20px;
+    font-weight:800;
+    letter-spacing:-.02em;
+  }
+  .hero h1 .grad{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{
+    font-size:18px;color:var(--muted);max-width:640px;margin:0 auto 36px;
+  }
+
+  .cta-row{
+    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 28px;border-radius:10px;
+    font-weight:600;font-size:16px;text-decoration:none;
+    transition:transform .15s, box-shadow .2s, background .2s;
+    border:1px solid transparent;cursor:pointer;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#1a1f2b;
+    box-shadow:0 8px 24px rgba(255,140,66,.25);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,140,66,.4)}
+  .btn-secondary{
+    background:var(--card);color:var(--text);border-color:var(--border);
+  }
+  .btn-secondary:hover{background:var(--bg2);border-color:var(--accent)}
+
+  .meta{
+    font-size:13px;color:var(--muted);margin-top:10px;
+  }
+  .meta code{
+    background:var(--card);padding:2px 8px;border-radius:6px;
+    font-family:'Consolas',monospace;color:var(--accent);font-size:12px;
+  }
+
+  /* Features */
+  .features{
+    padding:60px 0;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:28px 24px;
+    transition:transform .2s, border-color .2s;
+  }
+  .card:hover{transform:translateY(-4px);border-color:rgba(255,180,84,.4)}
+  .card .icon{font-size:32px;margin-bottom:14px}
+  .card h3{margin:0 0 8px;font-size:17px}
+  .card p{margin:0;color:var(--muted);font-size:14.5px}
+
+  /* Steps */
+  .section-title{
+    text-align:center;font-size:28px;margin:60px 0 12px;font-weight:700;
+  }
+  .section-sub{
+    text-align:center;color:var(--muted);margin-bottom:40px;
+  }
+  .steps{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;
+    margin-bottom:60px;
+  }
+  .step{
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:24px;
+  }
+  .step .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:32px;height:32px;border-radius:50%;
+    background:rgba(255,180,84,.15);color:var(--accent);
+    font-weight:700;font-size:15px;margin-bottom:14px;
+  }
+  .step h4{margin:0 0 8px;font-size:16px}
+  .step p{margin:0;color:var(--muted);font-size:14px}
+
+  /* Warning */
+  .warning{
+    background:rgba(239,68,68,.08);
+    border:1px solid rgba(239,68,68,.3);
+    border-left:4px solid var(--red);
+    border-radius:10px;
+    padding:18px 22px;
+    margin:40px 0;
+    font-size:14.5px;
+  }
+  .warning strong{color:#ff8080}
+
+  /* Commands table */
+  .commands{
+    width:100%;border-collapse:collapse;margin-bottom:60px;
+    background:var(--card);border-radius:14px;overflow:hidden;
+    border:1px solid var(--border);
+  }
+  .commands th,.commands td{
+    text-align:left;padding:14px 20px;border-bottom:1px solid var(--border);
+  }
+  .commands th{background:var(--bg2);font-size:13px;text-transform:uppercase;
+    letter-spacing:.05em;color:var(--muted)}
+  .commands td:first-child{
+    font-family:'Consolas',monospace;color:var(--accent);font-weight:600;
+    width:140px;
+  }
+  .commands tr:last-child td{border-bottom:none}
+
+  /* Footer */
+  footer{
+    border-top:1px solid var(--border);
+    padding:32px 0;
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+  }
+  footer a{color:var(--accent);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  @media(max-width:600px){
+    nav a{margin-left:14px;font-size:13px}
+    .hero{padding:50px 0 30px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%">
+    <div class="logo">
+      <span class="emoji">🐱</span>
+      <span>Catai</span>
+      <span class="badge">BETA</span>
+    </div>
+    <nav>
+      <a href="#features">Возможности</a>
+      <a href="#install">Установка</a>
+      <a href="https://github.com/Kirill638849776/catai">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>Локальный <span class="grad">ИИ-помощник</span><br>с собственной базой знаний</h1>
+    <p>Catai работает с файлом <code style="color:var(--accent)">knowledge.txt</code>, ищет информацию в Wikipedia и DuckDuckGo, ведёт историю диалога и имеет собственный характер. 🐾</p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/Kirill638849776/catai/releases/latest/download/catai_beta.exe">
+        ⬇ Скачать для Windows
+      </a>
+      <a class="btn btn-secondary" href="https://github.com/Kirill638849776/catai">
+        📦 Исходники на GitHub
+      </a>
+    </div>
+    <div class="meta">
+      Windows 10/11 · <code>catai_beta.exe</code> · MIT License
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="card">
+      <div class="icon">🧠</div>
+      <h3>Локальная база знаний</h3>
+      <p>Работает с файлом <code>knowledge.txt</code> рядом с программой. Твои данные остаются на компьютере.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🌐</div>
+      <h3>Интернет-поиск</h3>
+      <p>Дополняет ответы данными из Wikipedia и DuckDuckGo, когда локальных знаний не хватает.</p>
+    </div>
+    <div class="card">
+      <div class="icon">💬</div>
+      <h3>История диалога</h3>
+      <p>Помнит контекст беседы. Команда <code>/clear</code> очищает историю, <code>/history</code> — показывает последние сообщения.</p>
+    </div>
+    <div class="card">
+      <div class="icon">😼</div>
+      <h3>Свой характер</h3>
+      <p>Немного самоиронии и кошачьего настроения — общение с Catai не похоже на обычный чат-бот.</p>
+    </div>
+  </section>
+
+  <h2 class="section-title" id="install">Как установить</h2>
+  <p class="section-sub">Три шага — и можно общаться</p>
+
+  <section class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <h4>Скачай</h4>
+      <p>Нажми «Скачать для Windows» выше или зайди в раздел Releases на GitHub.</p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <h4>Размести</h4>
+      <p>Положи <code>catai_beta.exe</code> в удобную папку. Рядом создай <code>knowledge.txt</code>, если нужна своя база знаний.</p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <h4>Запусти</h4>
+      <p>Двойной клик по <code>catai_beta.exe</code> — и начинай диалог. Команда <code>/info</code> покажет справку.</p>
+    </div>
+  </section>
+
+  <div class="warning">
+    <strong>⚠️ Важно:</strong> Catai находится в стадии <b>beta</b>. Возможны ошибки и изменения между версиями.
+    Не храни в <code>knowledge.txt</code> пароли, токены и персональные данные — при интернет-поиске часть контекста может уходить во внешние сервисы.
+    Перед запуском скачанной сборки рекомендуется проверить источник и цифровую подпись, если она есть.
+  </div>
+
+  <h2 class="section-title">Команды</h2>
+  <p class="section-sub">Что можно ввести в чат</p>
+
+  <table class="commands">
+    <thead>
+      <tr><th>Команда</th><th>Описание</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>/info</td><td>Показывает информацию о боте</td></tr>
+      <tr><td>/clear</td><td>Очищает историю текущего диалога</td></tr>
+      <tr><td>/history</td><td>Показывает последние 10 сообщений</td></tr>
+      <tr><td>/exit или выход</td><td>Завершает работу программы</td></tr>
+    </tbody>
+  </table>
+
+</main>
+
+<footer>
+  <div class="container">
+    🐱 Catai Beta · <a href="https://github.com/Kirill638849776/catai">GitHub</a> · MIT License<br>
+    <span style="font-size:12px;opacity:.7">Сделано с любовью к котам и локальным моделям</span>
+  </div>
+</footer>
+
+</body>
+</html>
