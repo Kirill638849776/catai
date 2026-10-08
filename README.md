@@ -1,4 +1,7 @@
 # 🐱 Catai
+<p align="center">
+  <img src="assets/catai-banner.svg" alt="Catai" width="100%" />
+</p>
 
 **Локальный ИИ-помощник с собственной базой знаний и интернет-поиском.**
 
